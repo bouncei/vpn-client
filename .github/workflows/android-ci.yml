@@ -16,13 +16,13 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
         
     - name: Cache Gradle packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -41,7 +41,7 @@ jobs:
       run: ./gradlew detekt
       
     - name: Upload lint reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: lint-reports
@@ -58,13 +58,13 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
         
     - name: Cache Gradle packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -88,7 +88,7 @@ jobs:
         reporter: java-junit
         
     - name: Upload test reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: test-reports
@@ -106,13 +106,13 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
         
     - name: Cache Gradle packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -128,7 +128,7 @@ jobs:
       run: ./gradlew assembleDebug
       
     - name: Upload APK artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: debug-apk
         path: app/build/outputs/apk/debug/*.apk
@@ -137,7 +137,7 @@ jobs:
       run: ./gradlew assembleRelease
       
     - name: Upload release APK artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: release-apk-unsigned
         path: app/build/outputs/apk/release/*.apk
@@ -152,13 +152,13 @@ jobs:
       uses: actions/checkout@v4
       
     - name: Set up JDK 11
-      uses: actions/setup-java@v3
+      uses: actions/setup-java@v4
       with:
         java-version: '11'
         distribution: 'temurin'
         
     - name: Cache Gradle packages
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: |
           ~/.gradle/caches
@@ -180,7 +180,7 @@ jobs:
         script: ./gradlew connectedDebugAndroidTest
         
     - name: Upload instrumented test reports
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       if: always()
       with:
         name: instrumented-test-reports
