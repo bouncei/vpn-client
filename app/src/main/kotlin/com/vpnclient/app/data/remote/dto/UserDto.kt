@@ -12,6 +12,8 @@ data class UserDto(
     val id: Long,
     @SerializedName("email")
     val email: String,
+    @SerializedName("password")
+    val password: String,
     @SerializedName("token")
     val token: String
 ) {
