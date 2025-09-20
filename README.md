@@ -227,6 +227,9 @@ Response:
 
 This project was developed with AI assistance. Here are the key prompts used:
 
+![AI Development Process](docs/ai-screenshots/detailed-breakdown.png)
+*Screenshot showing AI-assisted development process and code generation*
+
 1. **Project Setup**:
 
    ```
@@ -311,6 +314,17 @@ Using `viewModelScope.launch` ensures the coroutine is automatically cancelled w
 3. **Test Generation**: Comprehensive test coverage with various scenarios
 4. **Documentation**: Detailed code comments and documentation
 5. **Best Practices**: Modern Android development practices and conventions
+
+### AI Development Screenshots
+
+The screenshot above demonstrates the AI-assisted development process, showing:
+- Real-time code generation and suggestions
+- Architecture pattern implementation
+- Test case generation
+- Code quality improvements and bug fixes
+- Documentation generation
+
+This visual evidence showcases how AI tools were integrated into the development workflow to create a production-quality Android application following modern development practices.
 
 ## 📊 Demo Video Script
 
