@@ -40,29 +40,34 @@ app/
 ### ✅ Implemented Features
 
 1. **Authentication Flow**
+
    - Email/password sign-in with validation
    - Mock authentication via json-server
    - Persistent session management with DataStore
    - Automatic navigation based on auth state
 
 2. **VPN Node Management**
+
    - Fetch available VPN servers from mock API
    - Display nodes with country, latency, and connection status
    - Pull-to-refresh functionality
    - Real-time connection state updates
 
 3. **Connection Simulation**
+
    - State pattern for connection lifecycle management
    - Strategy pattern for Fast vs Secure connection modes
    - Progress indicators during connection/disconnection
    - Persistent session tracking
 
 4. **Notifications**
+
    - Native Android notifications for connection events
    - Connection success/failure/disconnection alerts
    - Proper notification channels for Android 8.0+
 
 5. **Testing Suite**
+
    - Unit tests for ViewModels and Use Cases
    - Repository testing with mocked dependencies
    - End-to-end Compose UI tests
@@ -133,11 +138,13 @@ The mock server will run on `http://localhost:3000` with the following endpoints
 ### Test Credentials
 
 Use these credentials to sign in:
+
 - **Email**: `test@vpn.com`
 - **Password**: `password123`
 
 Alternative:
-- **Email**: `admin@vpn.com`  
+
+- **Email**: `admin@vpn.com`
 - **Password**: `admin123`
 
 ### App Flow
@@ -175,35 +182,43 @@ Alternative:
 The json-server provides these endpoints:
 
 ### Authentication
+
 ```http
-GET /api/v1/auth/login?email=test@vpn.com&password=password123
+GET /api/v1/auth/users?email=test@vpn.com&password=password123
 ```
 
 Response:
+
 ```json
-[{
-  "id": 1,
-  "email": "test@vpn.com", 
-  "password": "password123",
-  "token": "mock_jwt_token_12345"
-}]
+[
+  {
+    "id": 1,
+    "email": "test@vpn.com",
+    "password": "password123",
+    "token": "mock_jwt_token_12345"
+  }
+]
 ```
 
 ### VPN Nodes
+
 ```http
 GET /api/v1/nodes
 ```
 
 Response:
+
 ```json
-[{
-  "id": "us-east-1",
-  "name": "New York",
-  "country": "United States", 
-  "latency_ms": 45,
-  "public_key": "mock_public_key_ny_abc123",
-  "endpoint_ip": "192.168.1.1"
-}]
+[
+  {
+    "id": "us-east-1",
+    "name": "New York",
+    "country": "United States",
+    "latency_ms": 45,
+    "public_key": "mock_public_key_ny_abc123",
+    "endpoint_ip": "192.168.1.1"
+  }
+]
 ```
 
 ## 🤖 AI Development Evidence
@@ -213,21 +228,25 @@ Response:
 This project was developed with AI assistance. Here are the key prompts used:
 
 1. **Project Setup**:
+
    ```
    "Create a native Android VPN client with Clean Architecture using Kotlin, Jetpack Compose, and Hilt. Include domain models for User, VpnNode, and ConnectionState."
    ```
 
 2. **State Pattern Implementation**:
+
    ```
    "Implement the State pattern for VPN connection lifecycle with states: Disconnected, Connecting, Connected, Disconnecting, Error. Include state transitions and validation."
    ```
 
 3. **Strategy Pattern for Connections**:
+
    ```
    "Create a Strategy pattern for VPN connection types with FastConnectionStrategy and SecureConnectionStrategy, each with different timing and steps."
    ```
 
 4. **Testing Suite**:
+
    ```
    "Generate comprehensive unit tests for AuthViewModel using Mockk and coroutine testing. Include tests for loading states, success/failure scenarios, and form validation."
    ```
@@ -242,12 +261,13 @@ This project was developed with AI assistance. Here are the key prompts used:
 Here's an example of AI-generated code with a deliberate bug and its fix:
 
 **Original AI-Generated Code (with bug)**:
+
 ```kotlin
 // ❌ PROBLEMATIC: Using GlobalScope instead of viewModelScope
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
-    
+
     fun login(email: String, password: String) {
         GlobalScope.launch { // ❌ BUG: Memory leak potential
             loginUseCase(email, password)
@@ -260,12 +280,13 @@ class AuthViewModel @Inject constructor(
 ```
 
 **Fixed Version**:
+
 ```kotlin
 // ✅ CORRECT: Using viewModelScope for proper lifecycle management
 class AuthViewModel @Inject constructor(
     private val loginUseCase: LoginUseCase
 ) : ViewModel() {
-    
+
     fun login(email: String, password: String) {
         viewModelScope.launch { // ✅ FIX: Proper scope management
             loginUseCase(email, password)
@@ -277,10 +298,10 @@ class AuthViewModel @Inject constructor(
 }
 ```
 
-**Bug Explanation**: 
+**Bug Explanation**:
 The original code used `GlobalScope.launch` which can cause memory leaks because the coroutine isn't tied to the ViewModel's lifecycle. If the ViewModel is destroyed while the coroutine is running, it continues executing and may try to update UI state on a destroyed component.
 
-**Fix Explanation**: 
+**Fix Explanation**:
 Using `viewModelScope.launch` ensures the coroutine is automatically cancelled when the ViewModel is cleared, preventing memory leaks and crashes. This is the recommended pattern for ViewModel coroutines in Android.
 
 ### AI Benefits Observed
@@ -296,22 +317,26 @@ Using `viewModelScope.launch` ensures the coroutine is automatically cancelled w
 To record a comprehensive demo video (2-3 minutes):
 
 1. **Setup (30s)**
+
    - Show mock server running (`npm start`)
    - Launch Android app from Android Studio
 
 2. **Authentication (30s)**
+
    - Show sign-in screen
    - Enter test credentials
    - Demonstrate form validation
    - Successful authentication and navigation
 
 3. **Node Management (60s)**
+
    - Browse VPN node list
    - Show node details (country, latency)
    - Demonstrate pull-to-refresh
    - Show connection status card
 
 4. **Connection Flow (45s)**
+
    - Connect to a node using "Fast Connect"
    - Show connection progress
    - Display connected state
@@ -319,6 +344,7 @@ To record a comprehensive demo video (2-3 minutes):
    - Disconnect and show state change
 
 5. **Error Handling (15s)**
+
    - Show network error handling
    - Demonstrate retry functionality
 
@@ -329,12 +355,14 @@ To record a comprehensive demo video (2-3 minutes):
 ## 🏆 Project Highlights
 
 ### Code Quality Metrics
+
 - **Architecture**: Clean Architecture with SOLID principles
 - **Test Coverage**: 80%+ coverage on business logic
 - **Code Style**: Enforced with ktlint and detekt
 - **Documentation**: Comprehensive KDoc for public APIs
 
 ### Modern Android Practices
+
 - **Jetpack Compose**: Declarative UI with Material 3
 - **Coroutines**: Structured concurrency throughout
 - **Hilt**: Compile-time dependency injection
@@ -342,6 +370,7 @@ To record a comprehensive demo video (2-3 minutes):
 - **StateFlow**: Reactive state management
 
 ### Performance Considerations
+
 - **Lazy Loading**: Efficient list rendering with LazyColumn
 - **Caching**: Smart node caching with TTL
 - **Background Processing**: Proper coroutine scoping

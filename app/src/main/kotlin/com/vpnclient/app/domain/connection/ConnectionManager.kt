@@ -1,6 +1,8 @@
 package com.vpnclient.app.domain.connection
 
 import com.vpnclient.app.domain.model.ConnectionState
+import javax.inject.Inject
+import javax.inject.Singleton
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -9,19 +11,17 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
- * Singleton manager for VPN connections.
- * Orchestrates connection lifecycle using State and Strategy patterns.
+ * Singleton manager for VPN connections. Orchestrates connection lifecycle using State and Strategy
+ * patterns.
  */
 @Singleton
 class ConnectionManager @Inject constructor() {
-    
+
     private val scope = CoroutineScope(SupervisorJob() + Dispatchers.IO)
     private val connectionContext = ConnectionContext()
-    
+
     private val _connectionState = MutableStateFlow<ConnectionState>(ConnectionState.Disconnected)
     val connectionState: StateFlow<ConnectionState> = _connectionState.asStateFlow()
 
@@ -45,12 +45,12 @@ class ConnectionManager @Inject constructor() {
 
             // Attempt connection using state pattern
             val result = connectionContext.connect(nodeId, strategy)
-            
+
             if (result.isSuccess) {
                 // Start connection simulation
                 simulateConnection(nodeId, strategy)
             }
-            
+
             result
         } catch (e: Exception) {
             connectionContext.setState(ErrorStateHandler(nodeId, e.message ?: "Connection failed"))
@@ -66,12 +66,12 @@ class ConnectionManager @Inject constructor() {
     suspend fun disconnect(): Result<Unit> {
         return try {
             val result = connectionContext.disconnect()
-            
+
             if (result.isSuccess) {
                 // Start disconnection simulation
                 simulateDisconnection()
             }
-            
+
             result
         } catch (e: Exception) {
             Result.failure(e)
@@ -95,7 +95,7 @@ class ConnectionManager @Inject constructor() {
                 val steps = strategy.getConnectionSteps()
                 val stepDelay = strategy.getStepDelay()
 
-                for ((index, step) in steps.withIndex()) {
+                for (index in steps.indices) {
                     // Update progress
                     val progress = (index + 1).toFloat() / steps.size
                     connectionContext.setState(ConnectingStateHandler(nodeId, strategy))
@@ -109,27 +109,27 @@ class ConnectionManager @Inject constructor() {
                 val connectedAt = System.currentTimeMillis()
                 connectionContext.setState(ConnectedStateHandler(nodeId, connectedAt))
                 updateStateFlow()
-
             } catch (e: Exception) {
                 // Connection failed
-                connectionContext.setState(ErrorStateHandler(nodeId, e.message ?: "Connection failed"))
+                connectionContext.setState(
+                        ErrorStateHandler(nodeId, e.message ?: "Connection failed")
+                )
                 updateStateFlow()
             }
         }
     }
 
-    /**
-     * Simulate disconnection process.
-     */
+    /** Simulate disconnection process. */
     private fun simulateDisconnection() {
         scope.launch {
             try {
                 val currentState = connectionContext.getState()
-                val nodeId = when (currentState) {
-                    is ConnectionState.Connected -> currentState.nodeId
-                    is ConnectionState.Connecting -> currentState.nodeId
-                    else -> null
-                }
+                val nodeId =
+                        when (currentState) {
+                            is ConnectionState.Connected -> currentState.nodeId
+                            is ConnectionState.Connecting -> currentState.nodeId
+                            else -> null
+                        }
 
                 if (nodeId != null) {
                     connectionContext.setState(DisconnectingStateHandler(nodeId))
@@ -142,7 +142,6 @@ class ConnectionManager @Inject constructor() {
                 // Disconnection complete
                 connectionContext.setState(DisconnectedStateHandler())
                 updateStateFlow()
-
             } catch (e: Exception) {
                 // Force disconnection on error
                 connectionContext.setState(DisconnectedStateHandler())
@@ -151,9 +150,7 @@ class ConnectionManager @Inject constructor() {
         }
     }
 
-    /**
-     * Observe connection state changes and update StateFlow.
-     */
+    /** Observe connection state changes and update StateFlow. */
     private fun observeConnectionState() {
         scope.launch {
             while (true) {
@@ -163,9 +160,7 @@ class ConnectionManager @Inject constructor() {
         }
     }
 
-    /**
-     * Update the StateFlow with current connection state.
-     */
+    /** Update the StateFlow with current connection state. */
     private fun updateStateFlow() {
         _connectionState.value = connectionContext.getState()
     }
