@@ -41,6 +41,8 @@ class LoginUseCase @Inject constructor(
      * @return True if email format is valid
      */
     private fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        // Simple regex pattern that doesn't depend on Android framework
+        val emailRegex = "^[A-Za-z0-9+_.-]+@([A-Za-z0-9.-]+\\.[A-Za-z]{2,})$".toRegex()
+        return emailRegex.matches(email)
     }
 }
