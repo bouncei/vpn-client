@@ -16,7 +16,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.VpnKey
+// import androidx.compose.material.icons.filled.VpnKey
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -34,8 +34,8 @@ import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
-import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
-import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
+// import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+// import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -64,20 +64,20 @@ fun NodeListScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
-    val pullToRefreshState = rememberPullToRefreshState()
+    // val pullToRefreshState = rememberPullToRefreshState()
 
     // Handle pull-to-refresh
-    LaunchedEffect(pullToRefreshState.isRefreshing) {
-        if (pullToRefreshState.isRefreshing) {
-            viewModel.refreshNodes()
-        }
-    }
+    // LaunchedEffect(pullToRefreshState.isRefreshing) {
+    //     if (pullToRefreshState.isRefreshing) {
+    //         viewModel.refreshNodes()
+    //     }
+    // }
 
-    LaunchedEffect(uiState.isLoading) {
-        if (!uiState.isLoading) {
-            pullToRefreshState.endRefresh()
-        }
-    }
+    // LaunchedEffect(uiState.isLoading) {
+    //     if (!uiState.isLoading) {
+    //         pullToRefreshState.endRefresh()
+    //     }
+    // }
 
     // Show error messages
     LaunchedEffect(uiState.error) {
@@ -125,7 +125,7 @@ fun NodeListScreen(
         Box(
             modifier = Modifier
                 .fillMaxSize()
-                .nestedScroll(pullToRefreshState.nestedScrollConnection)
+                // .nestedScroll(pullToRefreshState.nestedScrollConnection)
                 .padding(paddingValues)
         ) {
             when {
@@ -158,7 +158,7 @@ fun NodeListScreen(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Icon(
-                                imageVector = Icons.Default.VpnKey,
+                                imageVector = Icons.Default.Refresh, // Using Refresh icon instead of VpnKey
                                 contentDescription = null,
                                 modifier = Modifier.size(64.dp),
                                 tint = MaterialTheme.colorScheme.onSurfaceVariant
@@ -214,10 +214,10 @@ fun NodeListScreen(
             }
 
             // Pull to refresh indicator
-            PullToRefreshContainer(
-                state = pullToRefreshState,
-                modifier = Modifier.align(Alignment.TopCenter)
-            )
+            // PullToRefreshContainer(
+            //     state = pullToRefreshState,
+            //     modifier = Modifier.align(Alignment.TopCenter)
+            // )
         }
     }
 }
@@ -262,7 +262,7 @@ private fun ConnectionStatusCard(
                 is ConnectionState.Connecting -> {
                     Spacer(modifier = Modifier.height(8.dp))
                     LinearProgressIndicator(
-                        progress = { connectionState.progress },
+                        progress = connectionState.progress,
                         modifier = Modifier.fillMaxWidth()
                     )
                 }

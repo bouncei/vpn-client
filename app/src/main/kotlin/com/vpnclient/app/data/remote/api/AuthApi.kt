@@ -8,30 +8,25 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-/**
- * Retrofit API interface for authentication endpoints.
- */
+/** Retrofit API interface for authentication endpoints. */
 interface AuthApi {
     /**
-     * Authenticate user with email and password.
-     * Note: json-server doesn't support POST body matching, so we use query params
+     * Authenticate user with email and password. Uses json-server filtering to find matching user
      * @param email User's email
      * @param password User's password
      * @return User data with authentication token
      */
-    @GET("/api/v1/auth/login")
+    @GET("/users")
     suspend fun login(
-        @Query("email") email: String,
-        @Query("password") password: String
+            @Query("email") email: String,
+            @Query("password") password: String
     ): Response<List<UserDto>>
-    
+
     /**
      * Alternative login endpoint using POST body (for future real API)
      * @param loginRequest Login credentials
      * @return User data with authentication token
      */
     @POST("/api/v1/auth/login")
-    suspend fun loginWithBody(
-        @Body loginRequest: LoginRequest
-    ): Response<UserDto>
+    suspend fun loginWithBody(@Body loginRequest: LoginRequest): Response<UserDto>
 }

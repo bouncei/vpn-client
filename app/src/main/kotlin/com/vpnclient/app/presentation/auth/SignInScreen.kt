@@ -13,8 +13,8 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Visibility
-import androidx.compose.material.icons.filled.VisibilityOff
+// import androidx.compose.material.icons.filled.Visibility
+// import androidx.compose.material.icons.filled.VisibilityOff
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -143,11 +143,12 @@ fun SignInScreen(
                             onClick = { passwordVisible = !passwordVisible }
                         ) {
                             Icon(
-                                imageVector = if (passwordVisible) {
-                                    Icons.Default.Visibility
-                                } else {
-                                    Icons.Default.VisibilityOff
-                                },
+                                imageVector = Icons.Default.Lock, // Temporarily using Lock icon
+                                // imageVector = if (passwordVisible) {
+                                //     Icons.Default.Visibility
+                                // } else {
+                                //     Icons.Default.VisibilityOff
+                                // },
                                 contentDescription = if (passwordVisible) {
                                     "Hide password"
                                 } else {
