@@ -1,0 +1,5 @@
+{
+  "/api/v1/auth/login": "/users",
+  "/api/v1/nodes": "/nodes",
+  "/api/v1/sessions": "/sessions"
+}

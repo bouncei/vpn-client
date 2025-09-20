@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">VPN Client</string>
+    <string name="sign_in">Sign In</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="connect">Connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connecting">Connecting...</string>
+    <string name="connected">Connected</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="nodes">VPN Nodes</string>
+    <string name="latency_ms">%d ms</string>
+    <string name="connection_notification_title">VPN Status</string>
+    <string name="connected_to_node">Connected to %s</string>
+    <string name="disconnected_from_vpn">Disconnected from VPN</string>
+    <string name="invalid_credentials">Invalid email or password</string>
+    <string name="network_error">Network error occurred</string>
+    <string name="loading">Loading...</string>
+</resources>

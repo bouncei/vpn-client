@@ -1,0 +1,16 @@
+{
+  "name": "vpn-client-mock-server",
+  "version": "1.0.0",
+  "description": "Mock REST API server for VPN Client development",
+  "main": "server.js",
+  "scripts": {
+    "start": "json-server --watch db.json --routes routes.json --port 3000 --host 0.0.0.0",
+    "dev": "json-server --watch db.json --routes routes.json --port 3000 --host 0.0.0.0 --delay 500"
+  },
+  "dependencies": {
+    "json-server": "^0.17.4"
+  },
+  "keywords": ["mock", "api", "vpn", "json-server"],
+  "author": "VPN Client Team",
+  "license": "MIT"
+}

@@ -1,0 +1,67 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "test@vpn.com",
+      "password": "password123",
+      "token": "mock_jwt_token_12345"
+    },
+    {
+      "id": 2,
+      "email": "admin@vpn.com", 
+      "password": "admin123",
+      "token": "mock_jwt_token_admin_67890"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "us-east-1",
+      "name": "New York",
+      "country": "United States",
+      "latency_ms": 45,
+      "public_key": "mock_public_key_ny_abc123",
+      "endpoint_ip": "192.168.1.1"
+    },
+    {
+      "id": "eu-west-1",
+      "name": "London", 
+      "country": "United Kingdom",
+      "latency_ms": 120,
+      "public_key": "mock_public_key_london_def456",
+      "endpoint_ip": "192.168.1.2"
+    },
+    {
+      "id": "ap-southeast-1",
+      "name": "Singapore",
+      "country": "Singapore", 
+      "latency_ms": 200,
+      "public_key": "mock_public_key_singapore_ghi789",
+      "endpoint_ip": "192.168.1.3"
+    },
+    {
+      "id": "us-west-1",
+      "name": "San Francisco",
+      "country": "United States",
+      "latency_ms": 80,
+      "public_key": "mock_public_key_sf_jkl012",
+      "endpoint_ip": "192.168.1.4"
+    },
+    {
+      "id": "eu-central-1", 
+      "name": "Frankfurt",
+      "country": "Germany",
+      "latency_ms": 95,
+      "public_key": "mock_public_key_frankfurt_mno345",
+      "endpoint_ip": "192.168.1.5"
+    }
+  ],
+  "sessions": [
+    {
+      "id": 1,
+      "userId": 1,
+      "nodeId": "us-east-1",
+      "connectedAt": "2023-12-01T10:30:00Z",
+      "isActive": true
+    }
+  ]
+}
