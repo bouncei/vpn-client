@@ -228,7 +228,13 @@ Response:
 This project was developed with AI assistance. Here are the key prompts used:
 
 ![AI Development Process](docs/ai-screenshots/detailed-breakdown.png)
-*Screenshot showing AI-assisted development process and code generation*
+_Screenshot showing ChatGPT detailed breakdown_
+
+![AI Code Generation](docs/ai-screenshots/Screenshot%202025-09-20%20at%2015.45.19.png)
+_Screenshot showing AI-assisted development process and code generation_
+
+![AI Development Workflow](docs/ai-screenshots/Screenshot%202025-09-20%20at%2015.48.15.png)
+_AI-assisted debugging_
 
 1. **Project Setup**:
 
@@ -317,54 +323,16 @@ Using `viewModelScope.launch` ensures the coroutine is automatically cancelled w
 
 ### AI Development Screenshots
 
-The screenshot above demonstrates the AI-assisted development process, showing:
-- Real-time code generation and suggestions
-- Architecture pattern implementation
-- Test case generation
+The screenshots above demonstrate the AI-assisted development process, showing:
+
+- **Detailed Breakdown**: Complete AI development workflow and process
+- **Code Generation**: Real-time AI code generation with architectural patterns
+- **Development Workflow**: AI-assisted implementation and code suggestions
+- Test case generation and validation
 - Code quality improvements and bug fixes
-- Documentation generation
+- Documentation generation and formatting
 
-This visual evidence showcases how AI tools were integrated into the development workflow to create a production-quality Android application following modern development practices.
-
-## 📊 Demo Video Script
-
-To record a comprehensive demo video (2-3 minutes):
-
-1. **Setup (30s)**
-
-   - Show mock server running (`npm start`)
-   - Launch Android app from Android Studio
-
-2. **Authentication (30s)**
-
-   - Show sign-in screen
-   - Enter test credentials
-   - Demonstrate form validation
-   - Successful authentication and navigation
-
-3. **Node Management (60s)**
-
-   - Browse VPN node list
-   - Show node details (country, latency)
-   - Demonstrate pull-to-refresh
-   - Show connection status card
-
-4. **Connection Flow (45s)**
-
-   - Connect to a node using "Fast Connect"
-   - Show connection progress
-   - Display connected state
-   - Show notification
-   - Disconnect and show state change
-
-5. **Error Handling (15s)**
-
-   - Show network error handling
-   - Demonstrate retry functionality
-
-6. **Wrap-up (10s)**
-   - Show app architecture overview
-   - Highlight key features implemented
+This visual evidence showcases how AI tools were integrated throughout the development workflow to create a production-quality Android application following modern development practices and Clean Architecture principles.
 
 ## 🏆 Project Highlights
 
