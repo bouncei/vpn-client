@@ -3,6 +3,7 @@ package com.vpnclient.app.presentation.auth
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.vpnclient.app.domain.usecase.LoginUseCase
+import com.vpnclient.app.domain.usecase.LogoutUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val loginUseCase: LoginUseCase
+    private val loginUseCase: LoginUseCase,
+    private val logoutUseCase: LogoutUseCase
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(AuthUiState())
@@ -79,6 +81,29 @@ class AuthViewModel @Inject constructor(
      */
     fun clearError() {
         _uiState.value = _uiState.value.copy(error = null)
+    }
+
+    /**
+     * Handle user logout.
+     * Clears authentication state and stored credentials.
+     */
+    fun logout() {
+        viewModelScope.launch {
+            logoutUseCase()
+                .onSuccess {
+                    _uiState.value = _uiState.value.copy(
+                        isAuthenticated = false,
+                        email = "",
+                        password = "",
+                        error = null
+                    )
+                }
+                .onFailure { exception ->
+                    _uiState.value = _uiState.value.copy(
+                        error = exception.message ?: "Logout failed"
+                    )
+                }
+        }
     }
 }
 

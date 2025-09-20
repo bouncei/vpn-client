@@ -3,6 +3,7 @@ package com.vpnclient.app.presentation.auth
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.vpnclient.app.domain.model.User
 import com.vpnclient.app.domain.usecase.LoginUseCase
+import com.vpnclient.app.domain.usecase.LogoutUseCase
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.Dispatchers
@@ -29,6 +30,7 @@ class AuthViewModelTest {
     val instantTaskExecutorRule = InstantTaskExecutorRule()
 
     private lateinit var loginUseCase: LoginUseCase
+    private lateinit var logoutUseCase: LogoutUseCase
     private lateinit var viewModel: AuthViewModel
     private val testDispatcher = StandardTestDispatcher()
 
@@ -36,7 +38,8 @@ class AuthViewModelTest {
     fun setup() {
         Dispatchers.setMain(testDispatcher)
         loginUseCase = mockk()
-        viewModel = AuthViewModel(loginUseCase)
+        logoutUseCase = mockk()
+        viewModel = AuthViewModel(loginUseCase, logoutUseCase)
     }
 
     @Test
@@ -162,5 +165,37 @@ class AuthViewModelTest {
         // Then
         val clearedState = viewModel.uiState.value
         assertNull("Error should be cleared", clearedState.error)
+    }
+
+    @Test
+    fun `logout clears authentication state`() = runTest {
+        // Given - User is authenticated
+        val email = "test@vpn.com"
+        val password = "password123"
+        val user = User(1L, email, "mock_token")
+        
+        coEvery { loginUseCase(email, password) } returns Result.success(user)
+        coEvery { logoutUseCase() } returns Result.success(Unit)
+        
+        // Login first
+        viewModel.updateEmail(email)
+        viewModel.updatePassword(password)
+        viewModel.login(email, password)
+        testDispatcher.scheduler.advanceUntilIdle()
+        
+        // Verify authenticated
+        val authenticatedState = viewModel.uiState.value
+        assertTrue("Should be authenticated", authenticatedState.isAuthenticated)
+
+        // When
+        viewModel.logout()
+        testDispatcher.scheduler.advanceUntilIdle()
+
+        // Then
+        val loggedOutState = viewModel.uiState.value
+        assertFalse("Should not be authenticated", loggedOutState.isAuthenticated)
+        assertEquals("Email should be cleared", "", loggedOutState.email)
+        assertEquals("Password should be cleared", "", loggedOutState.password)
+        assertNull("Error should be null", loggedOutState.error)
     }
 }

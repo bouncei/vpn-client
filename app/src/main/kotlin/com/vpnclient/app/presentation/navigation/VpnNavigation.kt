@@ -43,7 +43,15 @@ fun VpnNavigation(
         }
 
         composable(VpnDestination.NodeList.route) {
-            NodeListScreen()
+            NodeListScreen(
+                onLogout = {
+                    navController.navigate(VpnDestination.SignIn.route) {
+                        popUpTo(VpnDestination.NodeList.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+            )
         }
     }
 }

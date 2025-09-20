@@ -18,6 +18,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ExitToApp
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
@@ -51,6 +52,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.vpnclient.app.R
 import com.vpnclient.app.domain.model.ConnectionState
 import com.vpnclient.app.domain.model.VpnNode
+import com.vpnclient.app.presentation.auth.AuthViewModel
 
 /**
  * Node list screen showing available VPN servers. Supports pull-to-refresh and connection
@@ -58,7 +60,11 @@ import com.vpnclient.app.domain.model.VpnNode
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NodeListScreen(viewModel: NodeViewModel = hiltViewModel()) {
+fun NodeListScreen(
+    viewModel: NodeViewModel = hiltViewModel(),
+    authViewModel: AuthViewModel = hiltViewModel(),
+    onLogout: () -> Unit = {}
+) {
     val uiState by viewModel.uiState.collectAsState()
     val snackbarHostState = remember { SnackbarHostState() }
     // val pullToRefreshState = rememberPullToRefreshState()
@@ -98,6 +104,17 @@ fun NodeListScreen(viewModel: NodeViewModel = hiltViewModel()) {
                                 Icon(
                                         imageVector = Icons.Default.Refresh,
                                         contentDescription = "Refresh nodes"
+                                )
+                            }
+                            IconButton(
+                                onClick = { 
+                                    authViewModel.logout()
+                                    onLogout()
+                                }
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.ExitToApp,
+                                    contentDescription = "Logout"
                                 )
                             }
                         },
